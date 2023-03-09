@@ -731,6 +731,11 @@ public class HejiaDemo1 {
     public void test27() {
         System.out.println("release-1.0");
     }
+
+    @Test
+    public void test30() {
+        System.out.println("hotfix-1.1-test");
+    }
 }
 
 
