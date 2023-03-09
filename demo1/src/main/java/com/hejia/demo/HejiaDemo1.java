@@ -726,6 +726,11 @@ public class HejiaDemo1 {
     public void test26() {
         System.out.println("feature-20210309-test");
     }
+
+    @Test
+    public void test27() {
+        System.out.println("release-1.0");
+    }
 }
 
 
