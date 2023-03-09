@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+    <import resource="test1.xml"/>
+    <!-- 开启注解驱动 -->
+    <context:annotation-config/>
+    <context:component-scan base-package="com.hejia"/>
+
+    <!--配置property-->
+    <bean id="mappings"
+          class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
+
+        <property name="properties">
+            <value>
+                jdbc.driver.className=com.mysql.jdbc.Driver
+                jdbc.url=jdbc:mysql://localhost:3306/mydb
+            </value>
+        </property>
+    </bean>
+
+
+    <bean id="student1" class="com.hejia.bean.Student">
+        <property name="age" value="1"/>
+        <property name="name" value="张三"/>
+        <property name="sex" ref="sex1"/>
+    </bean>
+
+    <bean id="student2" class="com.hejia.bean.Student"
+          p:age="1"
+          p:name="李四"
+          p:sex-ref="sex3"/>
+
+    <bean id="student3" class="com.hejia.bean.Student">
+        <property name="age" value="21"/>
+        <property name="name" value="王五"/>
+        <property name="sex">
+            <bean class="com.hejia.bean.Sex">
+                <property name="id" value="5"/>
+                <property name="text" value="人妖"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="student4" class="com.hejia.bean.Student">
+        <property name="age" value="21"/>
+        <property name="name">
+            <!--空值-->
+            <null/>
+        </property>
+        <property name="sex">
+            <bean class="com.hejia.bean.Sex">
+                <property name="id" value="5"/>
+                <property name="text" value="人妖"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="student5" class="com.hejia.bean.Student">
+        <property name="age" value="21"/>
+        <property name="name" value="赵六"/>
+        <!--嵌套属性-->
+        <property name="sex" ref="sex1"/>
+        <property name="sex.id" value="7"/>
+        <property name="sex.text" value="亦男亦女"/>
+    </bean>
+
+    <!--自动装配-->
+    <bean id="student6" class="com.hejia.bean.Student">
+        <property name="age" value="21"/>
+        <property name="name" value="赵六"/>
+    </bean>
+
+    <bean id="sex3" name="sex3" class="com.hejia.bean.Sex" primary="true" init-method="afterPropertiesSet" destroy-method="destroy">
+        <constructor-arg name="id" value="3"/>
+        <constructor-arg name="text" value="未知"/>
+    </bean>
+
+    <bean id="sex4" name="sex4" class="com.hejia.bean.Sex" lazy-init="true">
+        <constructor-arg index="0" value="4"/>
+        <constructor-arg index="1" value="未告知"/>
+    </bean>
+
+    <bean id="sex6" name="sex6" class="com.hejia.bean.Sex"
+          c:id="6"
+          c:text="不男不女"/>
+
+    <bean id="clientService" name="clientService" class="com.hejia.bean.ClientService" factory-method="createInstance"/>
+
+    <bean id="moreComplexObject" name="moreComplexObject" class="com.hejia.bean.ComplexObject">
+        <!-- results in a setAdminEmails(java.util.Properties) call -->
+        <property name="adminEmails">
+            <props>
+                <prop key="administrator">administrator@example.org</prop>
+                <prop key="support">support@example.org</prop>
+                <prop key="development">development@example.org</prop>
+            </props>
+        </property>
+        <!-- results in a setSomeList(java.util.List) call -->
+        <property name="someList">
+            <list>
+                <value type="int">1</value>
+                <value type="int">2</value>
+                <value type="int">3</value>
+            </list>
+        </property>
+        <!-- results in a setSomeMap(java.util.Map) call -->
+        <property name="someMap">
+            <map>
+                <entry key="an entry" value="just some string"/>
+                <entry key="a ref" value="just something"/>
+            </map>
+        </property>
+        <!-- results in a setSomeSet(java.util.Set) call -->
+        <property name="someSet">
+            <set>
+                <value>just some string</value>
+                <value>just something</value>
+            </set>
+        </property>
+    </bean>
+
+    <bean id="childComplexObject" name="childComplexObject" parent="moreComplexObject">
+        <property name="adminEmails">
+            <props merge="true">
+                <prop key="administrator">admin@example.org</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!-- abstract -->
+    <bean id="abstractObject" name="abstractObject" class="com.hejia.bean.AbstractObject" abstract="true">
+        <property name="age" value="1"/>
+    </bean>
+
+    <bean id="extendsObject" name="extendsObject" class="com.hejia.bean.ExtendsObject" parent="abstractObject">
+        <property name="age" value="2"/>
+    </bean>
+</beans>

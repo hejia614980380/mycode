@@ -1,0 +1,29 @@
+
+spring:
+  kafka:
+    consumer:
+      group-id: test-group-001
+      auto-offset-reset: earliest
+      auto-commit-interval: 100
+      bootstrap-servers: 116.62.10.172:9095
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      enable-auto-commit: true
+
+    ssl:
+      protocol: SSL
+      trust-store-type: JKS
+      trust-store-location: file:D:\kafka\ssl\kafka.truststore
+      trust-store-password: ka4ka@123
+      key-store-type: JKS
+      key-store-location: file:D:\kafka\ssl\kafka.keystore
+      key-store-password: ka4ka@123
+      key-password: ka4ka@123
+
+    properties:
+      ssl:
+        endpoint:
+          identification:
+            algorithm: ''
+      security:
+        protocol: SSL

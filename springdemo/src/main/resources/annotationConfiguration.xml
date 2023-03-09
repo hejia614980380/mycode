@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+    <context:annotation-config/>
+    <!--<context:property-placeholder location="car.properties"/>-->
+    <context:component-scan base-package="com.hejia">
+        <!--<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Repository"/>-->
+    </context:component-scan>
+    <!--<bean class="com.hejia.annotationconfiguration.config.AppConfig"/>-->
+
+    <bean id="movieRecommender" name="movieRecommender" class="com.hejia.annotationconfiguration.bean.MovieRecommender"/>
+
+    <bean id="movieCatalog1" name="movieCatalog1" class="com.hejia.annotationconfiguration.bean.MovieCatalog" primary="true"/>
+
+    <bean id="movieCatalog2" name="movieCatalog1=2" class="com.hejia.annotationconfiguration.bean.MovieCatalog" primary="false"/>
+
+    <!--<bean id="movieCatalog1" name="movieCatalog1" class="com.hejia.annotationconfiguration.bean.MovieCatalog"/>-->
+
+    <!--<bean id="movieCatalog2" name="movieCatalog1=2" class="com.hejia.annotationconfiguration.bean.MovieCatalog"/>-->
+
+    <bean id="qualifierMovieRecommender" name="qualifierMovieRecommender" class="com.hejia.annotationconfiguration.bean.QualifierMovieRecommender"/>
+
+    <bean id="qualifierMovieCatalog1" name="qualifierMovieCatalog1" class="com.hejia.annotationconfiguration.bean.QualifierMovieCatalog">
+        <qualifier value="main"/>
+        <property name="catalog" value="1"/>
+    </bean>
+
+    <bean id="qualifierMovieCatalog2" name="qualifierMovieCatalog2" class="com.hejia.annotationconfiguration.bean.QualifierMovieCatalog">
+        <qualifier value="action"/>
+        <property name="catalog" value="2"/>
+    </bean>
+
+    <bean id="qualifierMovieCatalog3" name="qualifierMovieCatalog3" class="com.hejia.annotationconfiguration.bean.QualifierMovieCatalog">
+        <qualifier type="com.hejia.annotationconfiguration.annotation.Offline"/>
+        <property name="catalog" value="3"/>
+    </bean>
+
+    <bean id="qualifierMovieCatalog4" name="qualifierMovieCatalog4" class="com.hejia.annotationconfiguration.bean.QualifierMovieCatalog">
+        <qualifier type="com.hejia.annotationconfiguration.annotation.MovieQualifier">
+            <attribute key="format" value="VHS"/>
+            <attribute key="genre" value="Action"/>
+        </qualifier>
+        <property name="catalog" value="4"/>
+    </bean>
+
+    <bean id="resourceMovieListener" name="resourceMovieListener" class="com.hejia.annotationconfiguration.bean.ResourceMovieListener"/>
+
+    <bean id="resourceMovieFinder" name="resourceMovieFinder" class="com.hejia.annotationconfiguration.bean.ResourceMovieFinder">
+        <property name="movieFinder" value="1"/>
+    </bean>
+
+    <bean id="valueCar" name="valueCar" class="com.hejia.annotationconfiguration.bean.ValueCar">
+
+    </bean>
+
+    <!--<bean id="convertObject" name="convertObject" class="com.hejia.annotationconfiguration.bean.ConvertObject"/>-->
+</beans>
