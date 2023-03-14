@@ -8,4 +8,9 @@ public class VersionDemo {
         System.out.println("feature-20230314-test");
         System.out.println("release");
     }
+
+    @Test
+    public void test2() {
+        System.out.println("feature-20230314-test");
+    }
 }
